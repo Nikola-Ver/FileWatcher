@@ -19,8 +19,8 @@ const [fromPath, toPath] = require('./path.json');
 
 // In new version fixed previous trouble
 fs.watch(fromPath, (eventType, filename) => {
-    if (filename && filename !== 'Common.txt' && !/copy/i.exec(filename)) {
-        try {
+    try {
+        if (filename && filename !== 'Common.txt' && !/copy/i.exec(filename)) {
             fs.readdir(fromPath, (err, files) => {
                 let allData = '';
                 files.forEach(file => {
@@ -32,8 +32,8 @@ fs.watch(fromPath, (eventType, filename) => {
                 const commonFilePath = `${toPath}Common.txt`;
                 fs.writeFileSync(commonFilePath, allData);
             });
-        } catch (e) {
-            console.log(e);
         }
+    } catch (e) {
+        console.log(e);
     }
   });
